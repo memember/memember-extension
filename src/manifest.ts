@@ -37,6 +37,7 @@ export async function getManifest() {
       'activeTab',
       'http://*/',
       'https://*/',
+      'contextMenus',
     ],
     content_scripts: [{
       matches: ['http://*/*', 'https://*/*'],
