@@ -14,12 +14,12 @@ const [show, toggle] = useToggle(false)
       transition="opacity duration-300"
       :class="show ? 'opacity-100' : 'opacity-0'"
     >
-      Vitesse WebExt
+      {{ }}
     </div>
     <div
       class="flex w-10 h-10 rounded-full shadow cursor-pointer"
       bg="teal-600 hover:teal-700"
-      @click="toggle()"
+      @click="openPopup()"
     >
       <pixelarticons-power class="block m-auto text-white text-lg" />
     </div>
