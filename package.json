@@ -60,6 +60,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
+    "image-js": "^0.35.2",
     "tesseract.js": "^4.0.1",
     "vue-router": "4"
   }
