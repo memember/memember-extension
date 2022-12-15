@@ -18,4 +18,5 @@ const { state: imageText, isLoading, error } = useAsyncState(async () => {
 
 <template>
   <h1>{{ isLoading || imageText }}</h1>
+  <img :src="imageUrl" alt="meme">
 </template>

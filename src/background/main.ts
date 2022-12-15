@@ -6,7 +6,6 @@ if (import.meta.hot) {
   import('./contentScriptHMR')
 }
 
-// when tesseract is ready, create right click menu
 browser.contextMenus.create({
   id: 'memember-extension',
   title: 'Save To Meme database',
