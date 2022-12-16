@@ -1,3 +1,8 @@
+import './contextMenu'
+import { onMessage } from 'webext-bridge'
+import qs from 'qs'
+import { VARIABLES } from '~/variables'
+
 // only on dev mode
 if (import.meta.hot) {
   // @ts-expect-error for background HMR
@@ -6,23 +11,19 @@ if (import.meta.hot) {
   import('./contentScriptHMR')
 }
 
-browser.contextMenus.create({
-  id: 'memember-extension',
-  title: 'Save To Meme database',
-  contexts: ['image'],
-})
-
-browser.contextMenus.onClicked.addListener(async (info) => {
-  if (info.menuItemId === 'memember-extension') {
-    if (info.srcUrl) {
-      const popupUrl = browser.runtime.getURL('dist/popup/index.html')
-      await browser.windows.create({
-        url: `${popupUrl}?saveMeme=true&imageUrl=${encodeURIComponent(info.srcUrl)}`,
-        type: 'popup',
-        width: 400,
-        height: 600,
-      })
-    }
+onMessage('signInWithGithub', async () => {
+  const redirectUrl = browser.identity.getRedirectURL()
+  const options = {
+    provider: 'github',
+    redirect_to: redirectUrl,
   }
-})
+  const url = `${VARIABLES.SUPABASE_API_URL}/auth/v1/authorize?${qs.stringify(options)}`
+  console.log('url', url)
+  const authUrl = await browser.identity.launchWebAuthFlow({ url, interactive: true })
 
+  console.log('authUrl', authUrl)
+
+/*  const { data, error } = await SupabaseClient.auth.signInWithOAuth({ provider: 'github' })
+  console.log({ data, error })
+  return { data, error } */
+})

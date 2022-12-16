@@ -38,6 +38,8 @@ export async function getManifest() {
       'http://*/',
       'https://*/',
       'contextMenus',
+      'identity',
+      '<all_urls>',
     ],
     content_scripts: [{
       matches: ['http://*/*', 'https://*/*'],
@@ -56,7 +58,7 @@ export async function getManifest() {
     manifest.permissions?.push('webNavigation')
 
     // this is required on dev for Vite script to load
-    manifest.content_security_policy = `script-src \'self\' \'unsafe-eval\'\  http://localhost:${port} https://unpkg.com blob:; object-src \'self\'`
+    manifest.content_security_policy = `script-src \'self\' \'unsafe-eval\'\  http://localhost:${port} https://unpkg.com https://uezjeqpnqfgamnrukjor.supabase.co blob:; object-src \'self\'`
   }
 
   return manifest
