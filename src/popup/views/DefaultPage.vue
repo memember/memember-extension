@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { sendMessage } from 'webext-bridge'
+import { useAsyncState } from '@vueuse/core'
+import { SupabaseClient, checkAuth, getMemes, logOut } from '~/services/supabase'
 
 const router = useRouter()
 
@@ -9,15 +10,28 @@ const isSaveMeme = queryParams.get('saveMeme') === 'true'
 if (isSaveMeme)
   router.push({ name: 'SaveMeme' })
 
-const signInWithGithub = async () => {
-  const response = await sendMessage('signInWithGithub', null, 'background')
-  console.log('response', response)
+onMounted(async () => {
+  await checkAuth()
+  await getMemes()
+})
+
+const { state: user } = useAsyncState(async () => {
+  const { data: { user } } = await SupabaseClient.auth.getUser()
+  return user
+}, null)
+
+const onLogOut = async () => {
+  await logOut()
+  await router.push({ name: 'Login' })
 }
 </script>
 
 <template>
   <h1>default</h1>
-  <button @click="signInWithGithub">
-    Sign in with Github
+  <code>
+    {{ JSON.stringify(user, null, 2) }}
+  </code>
+  <button @click="onLogOut()">
+    Logout
   </button>
 </template>

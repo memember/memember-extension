@@ -1,6 +1,7 @@
 import './contextMenu'
 import { onMessage } from 'webext-bridge'
 import qs from 'qs'
+import { storage } from 'webextension-polyfill'
 import { VARIABLES } from '~/variables'
 
 // only on dev mode
@@ -12,18 +13,36 @@ if (import.meta.hot) {
 }
 
 onMessage('signInWithGithub', async () => {
-  const redirectUrl = browser.identity.getRedirectURL()
+  const redirectUrl = browser.identity.getRedirectURL('github')
+
   const options = {
     provider: 'github',
     redirect_to: redirectUrl,
   }
   const url = `${VARIABLES.SUPABASE_API_URL}/auth/v1/authorize?${qs.stringify(options)}`
-  console.log('url', url)
-  const authUrl = await browser.identity.launchWebAuthFlow({ url, interactive: true })
+  try {
+    const authUrl = await browser.identity.launchWebAuthFlow({ url, interactive: true })
+    const params = new URLSearchParams(new URL(authUrl).hash.slice(1))
+    const accessToken = params.get('access_token')
+    const refreshToken = params.get('refresh_token')
+    const expiresAt = params.get('expires_in')
 
-  console.log('authUrl', authUrl)
+    if (accessToken && refreshToken && expiresAt) {
+      await storage.local.set({
+        accessToken,
+        refreshToken,
+        expiresAt,
+      })
 
-/*  const { data, error } = await SupabaseClient.auth.signInWithOAuth({ provider: 'github' })
-  console.log({ data, error })
-  return { data, error } */
+      return { accessToken, refreshToken, expiresAt }
+    }
+    else {
+      console.warn('No access token or refresh token or expires at')
+      return null
+    }
+  }
+  catch (error) {
+    console.log('error', error)
+    return null
+  }
 })

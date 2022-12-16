@@ -5,6 +5,8 @@ import '../styles'
 
 import DefaultPopupPage from './views/DefaultPage.vue'
 import SaveMeme from './views/SaveMeme.vue'
+import Login from './views/Auth/Login.vue'
+import { checkAuth } from '~/services/supabase'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -15,11 +17,21 @@ const router = createRouter({
       component: DefaultPopupPage,
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+    },
+    {
       path: '/save-meme',
       name: 'SaveMeme',
       component: SaveMeme,
     },
   ],
+})
+
+router.beforeEach(async (to) => {
+  if (!await checkAuth() && to.name !== 'Login')
+    return { name: 'Login' }
 })
 
 const app = createApp(App)

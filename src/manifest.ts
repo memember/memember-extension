@@ -48,6 +48,12 @@ export async function getManifest() {
     web_accessible_resources: [
       'dist/contentScripts/style.css',
     ],
+
+    browser_specific_settings: {
+      gecko: {
+        id: 'memember-ext@memember.org',
+      },
+    },
   }
 
   if (isDev) {
