@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useAsyncState } from '@vueuse/core'
-import { SupabaseClient logOut } from '~/services/supabase'
+import { SupabaseClient, logOut } from '~/services/supabase'
 
 const router = useRouter()
 
