@@ -1,3 +1,47 @@
+@tailwind base;
+
+@layer base {
+  :root {
+    --popup-width: 400px;
+    --popup-max-height: 400px;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5 {
+    @apply text-lg;
+  }
+
+  h6 {
+    @apply text-base;
+  }
+
+  p {
+    @apply text-base;
+  }
+
+  a {
+    @apply text-blue-600 underline;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #app {
@@ -5,16 +49,10 @@ body,
   padding: 0;
 }
 
-.btn {
-  @apply px-4 py-1 rounded inline-block
-    bg-teal-600 text-white cursor-pointer
-    hover:bg-teal-700
-    disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50;
-}
+.popup {
+  width: var(--popup-width);
+  height: fit-content;
+  max-height: var(--popup-max-height);
 
-.icon-btn {
-  @apply inline-block cursor-pointer select-none
-    opacity-75 transition duration-200 ease-in-out
-    hover:opacity-100 hover:text-teal-600;
-  font-size: 0.9em;
+  @apply bg-dark-blue overflow-y-auto text-white;
 }
