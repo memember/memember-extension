@@ -10,6 +10,16 @@ export async function getMemes() {
   console.log({ data, error })
 }
 
+export async function saveMeme(user, imageText, hint, originalImageSrc) {
+  const { data, error } = await SupabaseClient
+    .from('memes')
+    .insert([
+      { user_id: user.id, imageText, hint, originalImageSrc },
+    ])
+
+  console.log({ data, error })
+}
+
 export async function checkAuth() {
   const data = await storage.local.get(['accessToken', 'refreshToken', 'expiresAt'])
   const { accessToken, refreshToken, expiresAt } = data
