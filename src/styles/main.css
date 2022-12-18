@@ -3,7 +3,7 @@
 @layer base {
   :root {
     --popup-width: 400px;
-    --popup-max-height: 400px;
+    --popup-height: 400px;
   }
 
   h1 {
@@ -37,6 +37,10 @@
   a {
     @apply text-blue-600 underline;
   }
+
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 @tailwind components;
@@ -50,9 +54,9 @@ body,
 }
 
 .popup {
+  min-width: var(--popup-width);
   width: var(--popup-width);
-  height: fit-content;
-  max-height: var(--popup-max-height);
+  height: var(--popup-height);
 
   @apply bg-dark-blue overflow-y-auto text-white;
 }

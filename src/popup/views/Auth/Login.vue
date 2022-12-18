@@ -1,14 +1,26 @@
 <script setup lang="ts">
 import { sendMessage } from 'webext-bridge'
+import { useRouter } from 'vue-router'
+import { useSaveMemeParams } from '~/composables/useSaveMemeParams'
+
+const isComingFromMenuAction = useSaveMemeParams()
+
+const router = useRouter()
 
 const signInWithGithub = async () => {
-  await sendMessage('signInWithGithub', undefined, 'background')
+  const response = await sendMessage('signInWithGithub', undefined, 'background')
+  if (response && isComingFromMenuAction) {
+
+  }
 }
 </script>
 
 <template>
-  <h1>Login</h1>
-  <button @click="signInWithGithub">
-    Sign in with Github
-  </button>
+  <div class="h-full flex justify-center flex-col items-center p-3">
+    <arcticons-memetastic class="text-white w-40 h-40" />
+    <button class="mt-5 bg-white rounded flex justify-center w-full text-black p-3" @click="signInWithGithub">
+      <mdi-github class="w-6 h-6 mr-2" />
+      <span>Sign in with Github</span>
+    </button>
+  </div>
 </template>

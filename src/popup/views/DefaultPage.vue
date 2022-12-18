@@ -2,12 +2,12 @@
 import { useRouter } from 'vue-router'
 import { useAsyncState } from '@vueuse/core'
 import { SupabaseClient, logOut } from '~/services/supabase'
+import { useSaveMemeParams } from '~/composables/useSaveMemeParams'
 
 const router = useRouter()
 
-const queryParams = new URLSearchParams(location.search)
-const isSaveMeme = queryParams.get('saveMeme') === 'true'
-if (isSaveMeme)
+const { isComingFromMenu } = useSaveMemeParams()
+if (isComingFromMenu)
   router.push({ name: 'SaveMeme' })
 
 const { state: user } = useAsyncState(async () => {
