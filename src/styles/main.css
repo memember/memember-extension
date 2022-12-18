@@ -51,6 +51,8 @@ body,
 #app {
   margin: 0;
   padding: 0;
+
+  @apply bg-dark-blue;
 }
 
 .popup {

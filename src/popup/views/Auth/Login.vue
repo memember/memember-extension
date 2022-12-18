@@ -3,15 +3,14 @@ import { sendMessage } from 'webext-bridge'
 import { useRouter } from 'vue-router'
 import { useSaveMemeParams } from '~/composables/useSaveMemeParams'
 
-const isComingFromMenuAction = useSaveMemeParams()
-
 const router = useRouter()
+const { isComingFromMenu, imageUrl } = useSaveMemeParams()
 
 const signInWithGithub = async () => {
   const response = await sendMessage('signInWithGithub', undefined, 'background')
-  if (response && isComingFromMenuAction) {
 
-  }
+  if (response && isComingFromMenu)
+    await router.push({ name: 'SaveMeme', query: { imageUrl, saveMeme: 'true' } })
 }
 </script>
 

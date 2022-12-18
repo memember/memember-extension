@@ -10,14 +10,25 @@ export async function getMemes() {
   console.log({ data, error })
 }
 
-export async function saveMeme(user, imageText, hint, originalImageSrc) {
-  const { data, error } = await SupabaseClient
-    .from('memes')
-    .insert([
-      { user_id: user.id, imageText, hint, originalImageSrc },
-    ])
-
-  console.log({ data, error })
+interface Meme {
+  imageText: string
+  hint: string
+  originalImageSrc: string
+}
+export async function saveMeme({ imageText, hint, originalImageSrc }: Meme) {
+  const { data: { user } } = await SupabaseClient.auth.getUser()
+  if (user && user.id) {
+    const { data, error } = await SupabaseClient
+      .from('memes')
+      .insert([
+        { user_id: user.id, imageText, hint, originalImageSrc },
+      ])
+    if (error)
+      console.error(error)
+    return data
+  }
+  console.warn('User is not authenticated while saved meme')
+  return null
 }
 
 export async function checkAuth() {

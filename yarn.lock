@@ -365,6 +365,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@kyvg/vue3-notification@^2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-2.7.0.tgz#2264d0244853b4cfc6a1aa4f2bfc508891d471a9"
+  integrity sha512-Eti6jRGips9fpf2WdRjlOOJGyjCZ35qt84CeTeFr5piAwXaMpvgzea4dqqTK5KCfqK3qz/zwwxAd/8AToLYL8A==
+
 "@mdn/browser-compat-data@5.2.17":
   version "5.2.17"
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.2.17.tgz#2aae9599f17793730af298da0dc5dcfa4a4b8d0f"

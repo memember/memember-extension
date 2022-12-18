@@ -12,7 +12,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
         url: `${popupUrl}?saveMeme=true&imageUrl=${encodeURIComponent(info.srcUrl)}`,
         type: 'popup',
         width: 400,
-        height: 400,
+        height: 530,
       })
     }
   }
